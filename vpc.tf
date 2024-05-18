@@ -1,6 +1,5 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
-
   name = "FIAP VPC-EKS"
   cidr = "10.0.0.0/16" #10.0.1.1 - 10.0.255.255
 

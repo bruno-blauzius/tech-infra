@@ -1,3 +1,32 @@
+### DOCUMENTDB
+
+resource "aws_security_group" "document_db" {
+  name        = "document_db"
+  vpc_id      = module.vpc.vpc_id
+}
+
+resource "aws_security_group_rule" "document_db_in" {
+  type              = "ingress"
+  from_port         = var.MONGO_PORT
+  to_port           = var.MONGO_PORT
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"] #0.0.0.0 - 255.255.255.255
+  security_group_id = aws_security_group.document_db.id
+  description = "DOCUMENT DB PORT INGRESS"
+}
+
+resource "aws_security_group_rule" "document_db_out" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"] #0.0.0.0 - 255.255.255.255
+  security_group_id = aws_security_group.document_db.id
+  description = "DOCUMENT DB PORT EGRESS"
+}
+
+
+### CLUSTER
 resource "aws_security_group" "ssh_cluster" {
   name        = "ssh_cluster"
   vpc_id      = module.vpc.vpc_id
